@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -49,7 +48,7 @@ public class DashBoardViewHandler {
                 List<DashBoard> dashBoardList = dashBoardRepository.findByPostId(commentCreated.getPostId());
                 for(DashBoard dashBoard : dashBoardList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    dashBoard.setCommentList("댓글 객체");
+                    dashBoard.setCommentList(null);
                 // view 레파지 토리에 save
                 dashBoardRepository.save(dashBoard);
                 }
@@ -87,7 +86,7 @@ public class DashBoardViewHandler {
                 for(DashBoard dashBoard : dashBoardList){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     dashBoard.setPostNickname(userUpdated.getNickname());
-                    dashBoard.setCommentList(List<String>.valueOf(userUpdated.getNickname()));
+                    dashBoard.setCommentList(null);
                 // view 레파지 토리에 save
                 dashBoardRepository.save(dashBoard);
                 }
@@ -112,7 +111,7 @@ public class DashBoardViewHandler {
         try {
             if (!commentDeleted.validate()) return;
             // view 레파지 토리에 삭제 쿼리
-            dashBoardRepository.deleteByCommentList(List<String>.valueOf(commentDeleted.getId()));
+            dashBoardRepository.deleteByCommentList(null);
         }catch (Exception e){
             e.printStackTrace();
         }

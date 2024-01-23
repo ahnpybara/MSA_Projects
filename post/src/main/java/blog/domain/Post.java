@@ -66,7 +66,7 @@ public class Post {
 
         /** Example 2:  finding and process
         
-        repository().findById(commentCreated.get???()).ifPresent(post->{
+        repository().findById(1).ifPresent(post->{
             
             post // do something
             repository().save(post);
