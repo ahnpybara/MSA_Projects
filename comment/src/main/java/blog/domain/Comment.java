@@ -30,9 +30,6 @@ public class Comment {
     public void onPostPersist() {
         CommentCreated commentCreated = new CommentCreated(this);
         commentCreated.publishAfterCommit();
-
-        AllCommentsDeleted allCommentsDeleted = new AllCommentsDeleted(this);
-        allCommentsDeleted.publishAfterCommit();
     }
 
     @PreRemove
