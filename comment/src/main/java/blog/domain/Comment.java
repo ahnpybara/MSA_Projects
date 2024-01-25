@@ -26,6 +26,8 @@ public class Comment {
 
     private String nickname;
 
+    private Long userId;
+
     @PostPersist
     public void onPostPersist() {
         CommentCreated commentCreated = new CommentCreated(this);

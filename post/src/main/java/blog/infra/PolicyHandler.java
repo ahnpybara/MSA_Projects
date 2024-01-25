@@ -20,9 +20,6 @@ public class PolicyHandler {
     @Autowired
     PostRepository postRepository;
 
-    @StreamListener(KafkaProcessor.INPUT)
-    public void whatever(@Payload String eventString) {}
-
     @StreamListener(
         value = KafkaProcessor.INPUT,
         condition = "headers['type']=='CommentCreated'"

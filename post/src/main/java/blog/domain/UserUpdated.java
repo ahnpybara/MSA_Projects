@@ -13,5 +13,5 @@ public class UserUpdated extends AbstractEvent {
     private String password;
     private String name;
     private String nickname;
-    private String email;
+    private Long userId;
 }
