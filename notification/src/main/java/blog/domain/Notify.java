@@ -44,7 +44,7 @@ public class Notify {
         commentCreateAlerted.publishAfterCommit();
         */
 
-        /** Example 2:  finding and process
+        /** Example 2:  finding and process1
         
         repository().findById(commentCreated.get???()).ifPresent(notify->{
             
