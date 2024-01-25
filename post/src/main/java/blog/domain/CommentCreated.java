@@ -13,4 +13,5 @@ public class CommentCreated extends AbstractEvent {
     private String content;
     private Long postId;
     private String nickname;
+    private Long userId;
 }

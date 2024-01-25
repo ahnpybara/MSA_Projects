@@ -16,6 +16,7 @@ public class PostCreated extends AbstractEvent {
     private String content;
     private List<Long> commentList;
     private String nickname;
+    private Long userId;
 
     public PostCreated(Post aggregate) {
         super(aggregate);

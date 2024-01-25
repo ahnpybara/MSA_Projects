@@ -16,6 +16,7 @@ public class PostDeleted extends AbstractEvent {
     private String content;
     private List<Long> commentList;
     private String nickname;
+    private Long userId;
 
     public PostDeleted(Post aggregate) {
         super(aggregate);

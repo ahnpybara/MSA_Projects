@@ -24,6 +24,8 @@ public class Post {
 
     private String content;
 
+    private Long userId;
+
     @ElementCollection
     private List<Long> commentList;
 
