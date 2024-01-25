@@ -77,7 +77,7 @@ public class Comment {
 
     }
 
-    // 안치윤 : 유저 정보가 업데이트 되었을 때, 댓글 정보도 업데이트하는 메서드
+    // 안치윤 : 유저 정보가 업데이트 되었을 때, 댓글 정보도 업데이트하는 메서드.
     public static void updateUser(UserUpdated userUpdated) {
         try {
             // 특정 유저id를 가진 댓글 객체를 리스트로 가져옵니다
