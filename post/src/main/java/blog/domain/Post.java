@@ -1,15 +1,6 @@
 package blog.domain;
 
 import blog.PostApplication;
-<<<<<<< HEAD
-import blog.domain.PostCreated;
-import blog.domain.PostDeleted;
-import blog.domain.PostEdited;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import javax.persistence.*;
-=======
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,16 +9,11 @@ import javax.persistence.*;
 
 import org.springframework.transaction.annotation.Transactional;
 
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
 import lombok.Data;
 
 @Entity
 @Table(name = "Post_table")
 @Data
-<<<<<<< HEAD
-//<<< DDD / Aggregate Root
-=======
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
 public class Post {
 
     @Id
@@ -38,11 +24,8 @@ public class Post {
 
     private String content;
 
-<<<<<<< HEAD
-=======
     private Long userId;
 
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
     @ElementCollection
     private List<Long> commentList;
 
@@ -68,87 +51,6 @@ public class Post {
 
     public static PostRepository repository() {
         PostRepository postRepository = PostApplication.applicationContext.getBean(
-<<<<<<< HEAD
-            PostRepository.class
-        );
-        return postRepository;
-    }
-
-    //<<< Clean Arch / Port Method
-    public static void commentCreateOnPost(CommentCreated commentCreated) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Post post = new Post();
-        repository().save(post);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(commentCreated.get???()).ifPresent(post->{
-            
-            post // do something
-            repository().save(post);
-
-
-         });
-        */
-
-    }
-
-    //>>> Clean Arch / Port Method
-    //<<< Clean Arch / Port Method
-    public static void commentDeleteOnPost(CommentDeleted commentDeleted) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Post post = new Post();
-        repository().save(post);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(commentDeleted.get???()).ifPresent(post->{
-            
-            post // do something
-            repository().save(post);
-
-
-         });
-        */
-
-    }
-
-    //>>> Clean Arch / Port Method
-    //<<< Clean Arch / Port Method
-    public static void updateUser(UserUpdated userUpdated) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
-        Post post = new Post();
-        repository().save(post);
-
-        */
-
-        /** Example 2:  finding and process
-        
-        repository().findById(userUpdated.get???()).ifPresent(post->{
-            
-            post // do something
-            repository().save(post);
-
-
-         });
-        */
-
-    }
-    //>>> Clean Arch / Port Method
-
-}
-//>>> DDD / Aggregate Root
-=======
                 PostRepository.class);
         return postRepository;
     }
@@ -203,4 +105,3 @@ public class Post {
         }
     }
 }
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730

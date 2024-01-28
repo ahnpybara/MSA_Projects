@@ -1,10 +1,6 @@
 package blog.domain;
 
 import blog.NotificationApplication;
-<<<<<<< HEAD
-import blog.domain.CommentCreateAlerted;
-=======
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -29,17 +25,6 @@ public class Notify {
 
     private String nickname;
 
-<<<<<<< HEAD
-    @PostPersist
-    public void onPostPersist() {
-        CommentCreateAlerted commentCreateAlerted = new CommentCreateAlerted(
-            this
-        );
-        commentCreateAlerted.publishAfterCommit();
-    }
-
-=======
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
     public static NotifyRepository repository() {
         NotifyRepository notifyRepository = NotificationApplication.applicationContext.getBean(
             NotifyRepository.class
@@ -59,11 +44,7 @@ public class Notify {
         commentCreateAlerted.publishAfterCommit();
         */
 
-<<<<<<< HEAD
-        /** Example 2:  finding and process
-=======
         /** Example 2:  finding and process1
->>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
         
         repository().findById(commentCreated.get???()).ifPresent(notify->{
             

@@ -1,13 +1,11 @@
 package blog.domain;
 
-import blog.domain.*;
 import blog.infra.AbstractEvent;
-import java.time.LocalDate;
 import java.util.*;
 import lombok.*;
 
-//<<< DDD / Domain Event
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString
 public class AllCommentsDeleted extends AbstractEvent {
 
@@ -17,7 +15,7 @@ public class AllCommentsDeleted extends AbstractEvent {
     private String nickname;
     private Long userId;
 
-    public AllCommentsDeleted(Comment aggregate) {
+    public AllCommentsDeleted(List<Comment> aggregate) {
         super(aggregate);
     }
 
@@ -25,4 +23,3 @@ public class AllCommentsDeleted extends AbstractEvent {
         super();
     }
 }
-//>>> DDD / Domain Event
