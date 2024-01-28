@@ -135,28 +135,39 @@ public class DashBoardViewHandler {
         }
     }
 
+    @Transactional
     @StreamListener(KafkaProcessor.INPUT)
     public void whenPostDeleted_then_DELETE_1(@Payload PostDeleted postDeleted) {
         try {
             if (!postDeleted.validate())
                 return;
-            // view 레파지 토리에 삭제 쿼리
+
             dashBoardRepository.deleteByPostId(postDeleted.getId());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    @Transactional
     @StreamListener(KafkaProcessor.INPUT)
     public void whenCommentDeleted_then_DELETE_2(@Payload CommentDeleted commentDeleted) {
         try {
             if (!commentDeleted.validate())
                 return;
-            // view 레파지 토리에 삭제 쿼리
+            // postid로 검색한 DashBoard 엔티티를 조회
+            Optional<DashBoard> dashboardOptional = dashBoardRepository.findByPostId(commentDeleted.getPostId());
+            if (dashboardOptional.isPresent()) {
+            DashBoard dashboard = dashboardOptional.get();
+            List<Comment> comments = dashboard.getCommentList();
+            // userId가 일치하는 댓글을 찾아서 삭제
+            comments.removeIf(comment -> comment.getUserId().equals(commentDeleted.getUserId()));
+            // 변경된 댓글 리스트를 DashBoard에 설정하고 저장
+            dashboard.setCommentList(comments);
+            dashBoardRepository.save(dashboard);
+        }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    // >>> DDD / CQRS
 }

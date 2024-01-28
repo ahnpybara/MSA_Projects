@@ -2,8 +2,6 @@ package blog.infra;
 
 import blog.CommentApplication;
 import blog.config.kafka.KafkaProcessor;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHeaders;
@@ -12,7 +10,6 @@ import org.springframework.transaction.support.TransactionSynchronizationAdapter
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.MimeTypeUtils;
 
-//<<< Clean Arch / Outbound Adaptor
 public class AbstractEvent {
 
     String eventType;
@@ -29,9 +26,7 @@ public class AbstractEvent {
     }
 
     public void publish() {
-        /**
-         * spring streams 방식
-         */
+
         KafkaProcessor processor = CommentApplication.applicationContext.getBean(
             KafkaProcessor.class
         );
@@ -80,4 +75,3 @@ public class AbstractEvent {
         return getEventType().equals(getClass().getSimpleName());
     }
 }
-//>>> Clean Arch / Outbound Adaptor

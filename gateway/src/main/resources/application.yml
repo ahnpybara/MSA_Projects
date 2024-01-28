@@ -26,7 +26,7 @@ spring:
           predicates:
             - Path=/undefined/**, 
         - id: user
-          uri: http://localhost:0
+          uri: http://localhost:8087
           predicates:
             - Path=/users/**, 
         - id: frontend

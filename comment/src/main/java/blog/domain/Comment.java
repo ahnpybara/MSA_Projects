@@ -1,21 +1,17 @@
 package blog.domain;
 
 import blog.CommentApplication;
-import blog.domain.AllCommentsDeleted;
-import blog.domain.CommentCreated;
-import blog.domain.CommentDeleted;
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import javax.persistence.*;
+
+
 import lombok.Data;
 
 @Entity
 @Table(name = "Comment_table")
 @Data
-// <<< DDD / Aggregate Root
 public class Comment {
 
     @Id
@@ -48,33 +44,17 @@ public class Comment {
         return commentRepository;
     }
 
-    // <<< Clean Arch / Port Method
+    // 안치윤 : 게시글 삭제시 해당 게시글에 달린 댓글들 또한 모두 삭제하기
     public static void deleteAllComments(PostDeleted postDeleted) {
-        // implement business logic here:
 
-        /**
-         * Example 1: new item
-         * Comment comment = new Comment();
-         * repository().save(comment);
-         * 
-         * AllCommentsDeleted allCommentsDeleted = new AllCommentsDeleted(comment);
-         * allCommentsDeleted.publishAfterCommit();
-         */
+        List<Comment> comments = repository().findAllByPostId(postDeleted.getId());
 
-        /**
-         * Example 2: finding and process
-         * 
-         * repository().findById(postDeleted.get???()).ifPresent(comment->{
-         * 
-         * comment // do something
-         * repository().save(comment);
-         * 
-         * AllCommentsDeleted allCommentsDeleted = new AllCommentsDeleted(comment);
-         * allCommentsDeleted.publishAfterCommit();
-         * 
-         * });
-         */
+        if (!comments.isEmpty()) {
+            repository().deleteAll(comments);
 
+            AllCommentsDeleted allCommentsDeleted = new AllCommentsDeleted(comments);
+            allCommentsDeleted.publishAfterCommit();
+        }
     }
 
     // 안치윤 : 유저 정보가 업데이트 되었을 때, 댓글 정보도 업데이트하는 메서드.

@@ -1,11 +1,10 @@
 package blog.domain;
 
-import blog.domain.*;
 import blog.infra.AbstractEvent;
-import java.util.*;
 import lombok.*;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @ToString
 public class UserUpdated extends AbstractEvent {
 
