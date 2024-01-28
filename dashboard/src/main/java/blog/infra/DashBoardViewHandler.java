@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DashBoardViewHandler {
@@ -135,6 +136,7 @@ public class DashBoardViewHandler {
         }
     }
 
+    @Transactional
     @StreamListener(KafkaProcessor.INPUT)
     public void whenPostDeleted_then_DELETE_1(@Payload PostDeleted postDeleted) {
         try {
@@ -147,16 +149,26 @@ public class DashBoardViewHandler {
         }
     }
 
+    @Transactional
     @StreamListener(KafkaProcessor.INPUT)
     public void whenCommentDeleted_then_DELETE_2(@Payload CommentDeleted commentDeleted) {
         try {
             if (!commentDeleted.validate())
                 return;
             // view 레파지 토리에 삭제 쿼리
+            Optional<DashBoard> dashboardOptional = dashBoardRepository.findByPostId(commentDeleted.getPostId());
+            if (dashboardOptional.isPresent()) {
+                DashBoard dashBoard = dashboardOptional.get();
+                List<Comment> comments = dashBoard.getCommentList();
+                comments.removeIf(comment -> comment.getUserId().equals(commentDeleted.getUserId()));
+                dashBoard.setCommentList(comments);
+                dashBoardRepository.save(dashBoard);
+                
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    // >>> DDD / CQRS
 }
+      // >>> DDD / CQRS
+
