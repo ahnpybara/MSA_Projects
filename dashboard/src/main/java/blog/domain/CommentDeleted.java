@@ -1,11 +1,11 @@
 package blog.domain;
 
 import blog.infra.AbstractEvent;
-import java.time.LocalDate;
-import java.util.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public class CommentDeleted extends AbstractEvent {
 
     private Long id;

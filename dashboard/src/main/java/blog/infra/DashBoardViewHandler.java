@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+<<<<<<< HEAD
 import java.util.stream.Collectors;
+=======
+>>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
 
 @Service
 public class DashBoardViewHandler {
@@ -142,8 +145,14 @@ public class DashBoardViewHandler {
         try {
             if (!postDeleted.validate())
                 return;
+<<<<<<< HEAD
             // view 레파지 토리에 삭제 쿼리
             dashBoardRepository.deleteByPostId(postDeleted.getId());
+=======
+
+            dashBoardRepository.deleteByPostId(postDeleted.getId());
+
+>>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -155,6 +164,7 @@ public class DashBoardViewHandler {
         try {
             if (!commentDeleted.validate())
                 return;
+<<<<<<< HEAD
             // view 레파지 토리에 삭제 쿼리
             Optional<DashBoard> dashboardOptional = dashBoardRepository.findByPostId(commentDeleted.getPostId());
             if (dashboardOptional.isPresent()) {
@@ -165,10 +175,26 @@ public class DashBoardViewHandler {
                 dashBoardRepository.save(dashBoard);
                 
             }
+=======
+            // postid로 검색한 DashBoard 엔티티를 조회
+            Optional<DashBoard> dashboardOptional = dashBoardRepository.findByPostId(commentDeleted.getPostId());
+            if (dashboardOptional.isPresent()) {
+            DashBoard dashboard = dashboardOptional.get();
+            List<Comment> comments = dashboard.getCommentList();
+            // userId가 일치하는 댓글을 찾아서 삭제
+            comments.removeIf(comment -> comment.getUserId().equals(commentDeleted.getUserId()));
+            // 변경된 댓글 리스트를 DashBoard에 설정하고 저장
+            dashboard.setCommentList(comments);
+            dashBoardRepository.save(dashboard);
+        }
+>>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+<<<<<<< HEAD
       // >>> DDD / CQRS
 
+=======
+>>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730

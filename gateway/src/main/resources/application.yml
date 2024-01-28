@@ -24,9 +24,15 @@ spring:
         - id: notification
           uri: http://localhost:8085
           predicates:
+<<<<<<< HEAD
             - Path=/notifies/**, 
         - id: user
           uri: http://localhost:8086
+=======
+            - Path=/undefined/**, 
+        - id: user
+          uri: http://localhost:8087
+>>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
           predicates:
             - Path=/users/**, 
         - id: frontend
@@ -68,7 +74,11 @@ spring:
         - id: notification
           uri: http://notification:8080
           predicates:
+<<<<<<< HEAD
             - Path=/notifies/**, 
+=======
+            - Path=/undefined/**, 
+>>>>>>> ccbb7ea0416aeb12de16d0890e37e1656e617730
         - id: user
           uri: http://user:8080
           predicates:
