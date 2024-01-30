@@ -26,7 +26,7 @@ public class AbstractEvent {
     }
 
     public void publish() {
-
+        
         KafkaProcessor processor = DashboardApplication.applicationContext.getBean(
             KafkaProcessor.class
         );
