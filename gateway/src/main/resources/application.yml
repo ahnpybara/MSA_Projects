@@ -20,19 +20,19 @@ spring:
         - id: dashboard
           uri: http://localhost:8084
           predicates:
-            - Path=, 
-        - id: notification
-          uri: http://localhost:8085
-          predicates:
-            - Path=/undefined/**, 
+            - Path=/dashBoards/**,
         - id: user
           uri: http://localhost:8087
           predicates:
             - Path=/users/**, 
-        - id: frontend
-          uri: http://localhost:8080
+        - id: login
+          uri: http://localhost:8087  # 로그인 서비스의 주소로 변경
           predicates:
-            - Path=/**
+            - Path=/login,
+        - id: logout
+          uri: http://localhost:8087  # 로그아웃 서비스의 주소로 변경
+          predicates:
+            - Path=/logout,    
 #>>> API Gateway / Routes
       globalcors:
         corsConfigurations:
