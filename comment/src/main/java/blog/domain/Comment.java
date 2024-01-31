@@ -44,6 +44,11 @@ public class Comment {
         return commentRepository;
     }
 
+    public void create(CommentCreated commentCreated){
+        setContent(commentCreated.getContent());
+        setPostId(commentCreated.getPostId());
+    }
+
     // 안치윤 : 게시글 삭제시 해당 게시글에 달린 댓글들 또한 모두 삭제하기
     public static void deleteAllComments(PostDeleted postDeleted) {
 

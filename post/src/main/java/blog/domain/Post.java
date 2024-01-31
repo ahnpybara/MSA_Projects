@@ -55,15 +55,20 @@ public class Post {
         return postRepository;
     }
 
+    public void create(PostCreated postCreated){
+        setTitle(postCreated.getTitle());
+        setContent(postCreated.getContent());
+    }
+
     // 진승찬 : 게시글에 댓글이 달렸을 때, 게시글의 댓글리스트 필드에 댓글 추가하는 메서드
     @Transactional
     public static void commentCreateOnPost(CommentCreated commentCreated) {
-        repository().findById(commentCreated.getPostId()).ifPresent(post -> { 
+        repository().findById(commentCreated.getPostId()).ifPresent(post -> {
 
             List<Long> newCommentList = new ArrayList<>(post.getCommentList());
-                                                                                
-            newCommentList.add(commentCreated.getId()); 
-            post.setCommentList(newCommentList); 
+
+            newCommentList.add(commentCreated.getId());
+            post.setCommentList(newCommentList);
 
             repository().save(post);
 
