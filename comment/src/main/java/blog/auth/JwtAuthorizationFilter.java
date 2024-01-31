@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +33,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private List<SimpleGrantedAuthority> extractAuthoritiesFromClaims(Map<String, Claim> claims) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
+    
         if (claims.containsKey("roles")) {
             try {
                 String[] rolesArray = claims.get("roles").asArray(String.class);
@@ -45,10 +46,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 authorities.add(new SimpleGrantedAuthority(role));
             }
         }
-
+    
         return authorities;
     }
-
+    
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -84,15 +85,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                             .verify(actualToken)
                             .getClaims();
 
+                    String id = claims.get("sub").asString();
+                    String email = claims.get("email").asString();
+
+                    authUser userDetails = new authUser(id, email);
+
                     // 권한 추출
                     List<SimpleGrantedAuthority> authorities = extractAuthoritiesFromClaims(claims);
 
-                    System.out
-                            .println("=============================================================Claims: " + claims);
+                    System.out.println("=============================================================Claims: " + claims);
+
 
                     // Authentication 객체 생성 및 설정
                     Authentication authentication = new UsernamePasswordAuthenticationToken(
-                            claims.get("sub").asString(), null, authorities);
+                        userDetails, null, authorities);
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 

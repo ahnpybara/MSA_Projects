@@ -29,7 +29,7 @@ public class User {
 
     private String email;
 
-     private String roles; //USER, ADMIN
+    private String roles; //USER, ADMIN
 
     public List<String> getRoleList(){
         if(this.roles.length() > 0) {
@@ -85,6 +85,5 @@ public class User {
            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
         }
    }
-
 }
 //>>> DDD / Aggregate Root

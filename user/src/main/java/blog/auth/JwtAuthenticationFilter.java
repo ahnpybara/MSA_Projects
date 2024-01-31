@@ -96,6 +96,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(Date.from(Instant.now().plus(10, ChronoUnit.MINUTES))) // 토큰 만료 시간
                 .withClaim("id", serviceUserDetail.getUser().getId())
                 .withClaim("email", serviceUserDetail.getUser().getEmail())
+                .withClaim("nickname", serviceUserDetail.getUser().getNickname())
                 .withClaim("roles", serviceUserDetail.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .map(role -> role.trim()) // 각 권한 문자열에서 앞뒤 공백 제거
@@ -116,6 +117,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // 요청할 때마다 JWT토큰을 가지고 요청하며
         // 서버는 JWT토큰이 유효한지를 판단(필터를 만들어야함)
         System.out.println(jwtToken);
-    }
 
+        // 응답 본문에 데이터 추가
+        Long userId = serviceUserDetail.getUser().getId();
+        String nickname = serviceUserDetail.getUser().getNickname(); // 닉네임 가져오기
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write("{\"userId\": \"" + userId + "\", \"nickname\": \"" + nickname + "\"}");
+    }
 }
