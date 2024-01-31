@@ -83,14 +83,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                             .build()
                             .verify(actualToken)
                             .getClaims();
-                    // 정수일 경우 string으로 바꾸기
-
-                    // AuthUser를 사용하고 싶으면 이렇게 하기
-                    AuthUser userDetails = new AuthUser(
-                            // id는 정수이기에 int로 뽑고 문자열로 변환
-                            Long.valueOf(claims.get("id").asInt()),
-                            claims.get("email").asString(),
-                            claims.get("nickname").asString());
 
                     // 권한 추출
                     List<SimpleGrantedAuthority> authorities = extractAuthoritiesFromClaims(claims);
@@ -100,7 +92,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                     // Authentication 객체 생성 및 설정
                     Authentication authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, authorities);
+                            claims.get("sub").asString(), null, authorities);
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 

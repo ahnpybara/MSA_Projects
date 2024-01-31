@@ -1,14 +1,13 @@
 package blog.auth;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class authUser {
-    private String id;
+@AllArgsConstructor
+public class AuthUser {
+    // 조회하고 싶은 필드값 넣기
+    private Long id;
     private String email;
-
-    public authUser(String id, String email) {
-        this.id = id;
-        this.email = email;
-    }
+    private String nickName;
 }

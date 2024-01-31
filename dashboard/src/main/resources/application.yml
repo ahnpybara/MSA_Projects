@@ -1,3 +1,6 @@
+your:
+  jwt: 
+    secret: cos
 server:
   port: 8080
 

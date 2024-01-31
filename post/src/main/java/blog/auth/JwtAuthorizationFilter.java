@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +32,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private List<SimpleGrantedAuthority> extractAuthoritiesFromClaims(Map<String, Claim> claims) {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-    
+
         if (claims.containsKey("roles")) {
             try {
                 String[] rolesArray = claims.get("roles").asArray(String.class);
@@ -46,10 +45,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 authorities.add(new SimpleGrantedAuthority(role));
             }
         }
-    
+
         return authorities;
     }
-    
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -84,22 +83,24 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                             .build()
                             .verify(actualToken)
                             .getClaims();
+                    // 정수일 경우 string으로 바꾸기
 
-                    String id = String.valueOf(claims.get("id").asInt());
-                    String nickname = claims.get("nickname").asString();
-                    String email = claims.get("email").asString();
-
-                    authUser userDetails = new authUser(id, email, nickname);
+                    // AuthUser를 사용하고 싶으면 이렇게 하기
+                    AuthUser userDetails = new AuthUser(
+                            // id는 정수이기에 int로 뽑고 문자열로 변환
+                            Long.valueOf(claims.get("id").asInt()),
+                            claims.get("email").asString(),
+                            claims.get("nickname").asString());
 
                     // 권한 추출
                     List<SimpleGrantedAuthority> authorities = extractAuthoritiesFromClaims(claims);
 
-                    System.out.println("=============================================================Claims: " + claims);
-
+                    System.out
+                            .println("=============================================================Claims: " + claims);
 
                     // Authentication 객체 생성 및 설정
                     Authentication authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, authorities);
+                            userDetails, null, authorities);
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
 
@@ -114,4 +115,5 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         filterChain.doFilter(request, response);
     }
+
 }

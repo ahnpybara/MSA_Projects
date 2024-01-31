@@ -7,7 +7,6 @@ import java.util.NoSuchElementException;
 
 import javax.persistence.*;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Data;
@@ -56,20 +55,9 @@ public class Post {
         return postRepository;
     }
 
-    public void create(PostCreated postCreated) {
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hassPassword = passwordEncoder.encode(userCreated.getPassword());
-        validateDuplicate(userCreated.getEmail());
-        setPassword(hassPassword);
-        setEmail(userCreated.getEmail());
-        setName(userCreated.getName());
-        setNickname(userCreated.getNickname());
-        if (userCreated.getEmail().equals("admin")) {
-            setRoles("ROLE_USER, ROLE_ADMIN");
-        } else {
-            setRoles("ROLE_USER");
-
-        }
+    public void create(PostCreated postCreated){
+        setTitle(postCreated.getTitle());
+        setContent(postCreated.getContent());
     }
 
     // 진승찬 : 게시글에 댓글이 달렸을 때, 게시글의 댓글리스트 필드에 댓글 추가하는 메서드
